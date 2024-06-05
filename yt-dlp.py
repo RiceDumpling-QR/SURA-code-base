@@ -21,9 +21,21 @@ def get_disk_usage(path):
 def get_video_info(video_url):
 
     info = {}
-    info['title'] = run_command(['yt-dlp', '--get-title', video_url])
-    info['uploader'] = run_command(['yt-dlp', '--get-filename', '-o', '%(uploader)s', video_url])
-    info['duration'] = run_command(['yt-dlp', '--get-duration', video_url])
+    info['title'] = run_command(['yt-dlp', 
+                                 "-v",
+                                "--cookies-from-browser",
+                                "chrome",
+                                '--get-title', video_url])
+    info['uploader'] = run_command(['yt-dlp', '--get-filename', 
+                                    "-v",
+                                    "--cookies-from-browser",
+                                    "chrome",
+                                    '-o', '%(uploader)s', video_url])
+    info['duration'] = run_command(['yt-dlp', 
+                                    "-v",
+                                    "--cookies-from-browser",
+                                    "chrome",
+                                    '--get-duration', video_url])
     
     return info
 
@@ -40,11 +52,11 @@ def download_video(video_url):
     # Command to execute
     command = [
         "yt-dlp",
-        #"-v",
-        #"--cookies-from-browser",
-        #"chrome",
+        "-v",
+        "--cookies-from-browser",
+        "chrome",
         "-f",
-        "bv[height<=360]+ba/b[height<=360]",
+        "bv[height<=160]+ba/b[height<=160]",
         video_url
     ]
 
